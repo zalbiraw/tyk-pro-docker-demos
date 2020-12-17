@@ -13,4 +13,8 @@ A repo for all different Tyk + different platforms demo.
 4. Navigate to [http://localhost:3000](http://localhost:3000) in your browser to access the Tyk Dashboard.
 
 ## Platforms
-- Simple Node.js API with Express.js `/simple-api`
+- Analytics `/backend-servers`
+    - **Datadog** `/datadog`
+
+- Backend Servers `/backend-servers`
+    - **Express.js** API `/express-js`
