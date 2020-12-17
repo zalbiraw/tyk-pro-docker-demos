@@ -11,3 +11,6 @@ A repo for all different Tyk + different platforms demo.
 3. Run docker-compose using the following command `docker-compose up`.<br />
 **NOTE:** This will only run the Tyk package. If you want to run any of the other demos please check out the readme file inside their respective folders.
 4. Navigate to [http://localhost:3000](http://localhost:3000) in your browser to access the Tyk Dashboard.
+
+## Platforms
+- Simple Node.js API with Express.js `/simple-api`
