@@ -3,10 +3,11 @@ version: '3.3'
 services:
 
   simple-api:
-
     build:
       context: .
       dockerfile: ./simple-api/Dockerfile
+
+    container_name: simple-api
 
     volumes:
     - ./simple-api/src/index.js:/var/www/index.js
@@ -15,3 +16,6 @@ services:
 
     ports:
       - "3030:3030"
+
+    networks:
+    - tyk
