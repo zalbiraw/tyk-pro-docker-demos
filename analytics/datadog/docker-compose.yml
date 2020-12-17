@@ -3,7 +3,7 @@ version: '3.3'
 services:
   tyk-pump:
     volumes:
-    - ./datadog/confs/pump.conf:/opt/tyk-pump/pump.conf
+    - ./analytics/datadog/confs/pump.conf:/opt/tyk-pump/pump.conf
 
   datadog:
     image: datadog/dogstatsd:latest
