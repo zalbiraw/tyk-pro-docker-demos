@@ -1,4 +1,7 @@
+## Requirements
+1. [Datadog](https://www.datadoghq.com/) API key.
+
 ## Getting Started
-1. Run docker-compose using the following command `docker-compose -f docker-compose.yml -f docker-compose-simple-api.yml up`.
-2. Navigate to [http://localhost:3000](http://localhost:3000) in your browser to access the Tyk Dashboard.
-3. Navigate to [http://localhost:3030/user](http://localhost:3030/user) in your browser to access the Simple Node.js API.
+1. Initilaize `DATADOG_API_KEY` by running the `scripts/init.sh` script in the repo root.
+2. Run docker-compose from the repo root using the following command `docker-compose -f docker-compose.yml -f analytics/datadog/docker-compose.yml up`.
+3. Navigate to [https://www.datadoghq.com](https://www.datadoghq.com/) in your browser to view your analytics.
