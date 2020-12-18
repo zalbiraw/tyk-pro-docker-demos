@@ -10,7 +10,7 @@ services:
     container_name: datadog
 
     environment:
-     - DD_API_KEY=a314f2d78f1041b746380e74a1b30394
+     - DD_API_KEY=${DATADOG_API_KEY}
      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
 
     ports:

@@ -1,5 +1,14 @@
-read -n2048 -s -p 'Please enter your Tyk Pro License key: ' license_key
-echo LICENSE_KEY=$license_key >> .env
-echo
+cp .env.example .env
+vim .env
 
-tput setaf 2; echo "Tyk Pro configured. Navigate to the the tyk folder to run Tyk Pro using docker-compose."
+sleep 1
+
+if grep -q "TYK_LICENSE_KEY=." .env
+then
+  tput setaf 2; echo "Tyk Pro configured."
+fi
+
+if grep -q "DATADOG_API_KEY=." .env
+then
+  tput setaf 2; echo "Datadog configured."
+fi

@@ -5,7 +5,7 @@ services:
     container_name: tyk-dashboard
 
     environment:
-      - TYK_DB_LICENSEKEY=${LICENSE_KEY}
+      - TYK_DB_LICENSEKEY=${TYK_LICENSE_KEY}
 
     ports:
     - "3000:3000"
