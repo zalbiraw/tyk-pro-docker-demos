@@ -17,4 +17,7 @@ A repo for all different Tyk + different platforms demo.
     - **Datadog** `/datadog`
 
 - Backend Servers `/backend-servers`
-    - **Express.js** API `/express-js`
+    - **Express.js** `/express-js`
+
+- Portal `/portal`
+    - **Custom Templates** `/custom-templates`
