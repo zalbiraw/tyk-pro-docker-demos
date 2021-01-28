@@ -1,11 +1,19 @@
 version: '3.3'
 services:
   tyk-dashboard:
-    image: tykio/tyk-dashboard:latest
+    build:
+      context: .
+      dockerfile: ./tyk-dashboard/Dockerfile
     container_name: tyk-dashboard
 
     environment:
       - TYK_DB_LICENSEKEY=${TYK_LICENSE_KEY}
+      - ORG=${ORG}
+      - SLUG=${SLUG}
+      - EMAIL=${EMAIL}
+      - FIRST=${FIRST}
+      - LAST=${LAST}
+      - PASSWORD=${PASSWORD}
 
     ports:
     - "3000:3000"
