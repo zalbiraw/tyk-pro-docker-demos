@@ -13,11 +13,11 @@ A repo for all different Tyk + different platforms demo.
 4. Navigate to [http://localhost:3000](http://localhost:3000) in your browser to access the Tyk Dashboard.
 
 ## Platforms
-- Analytics `/analytics`
+- Analytics `demos/analytics`
     - **Datadog** `/datadog`
 
-- Backend Servers `/backend-servers`
+- Backend Servers `demos/backend-servers`
     - **Express.js** `/express-js`
 
-- Portal `/portal`
+- Portal `demos/portal`
     - **Custom Templates** `/custom-templates`
