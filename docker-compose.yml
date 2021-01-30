@@ -8,6 +8,9 @@ services:
 
     environment:
       - TYK_DB_LICENSEKEY=${TYK_LICENSE_KEY}
+      - TYK_DB_LISTENPORT=${DASHBOARD_PORT}
+      - TYK_DB_APICONFIG_HOST=${GATEWAY_PROTOCOL}://${GATEWAY_HOST}
+      - TYK_DB_APICONFIG_PORT=${GATEWAY_PORT}
       - ORG=${ORG}
       - SLUG=${SLUG}
       - EMAIL=${EMAIL}
@@ -16,7 +19,7 @@ services:
       - PASSWORD=${PASSWORD}
 
     ports:
-    - "3000:3000"
+    - "${MACHINE_DASHBOARD_PORT}:${DASHBOARD_PORT}"
     - "5000:5000"
 
     volumes:
@@ -29,8 +32,13 @@ services:
     image: tykio/tyk-gateway:latest
     container_name: tyk-gateway
 
+    environment:
+      - TYK_GW_LISTENPORT=${GATEWAY_PORT}
+      - TYK_GW_POLICIES_POLICYCONNECTIONSTRING=${DASHBOARD_PROTOCOL}://tyk-dashboard:${DASHBOARD_PORT}
+      - TYK_GW_DBAPPCONFOPTIONS_CONNECTIONSTRING=${DASHBOARD_PROTOCOL}://tyk-dashboard:${DASHBOARD_PORT}
+
     ports:
-    - "8080:8080"
+    - "${MACHINE_GATEWAY_PORT}:${GATEWAY_PORT}"
 
     volumes:
     - ./confs/tyk.conf:/opt/tyk-gateway/tyk.conf

@@ -2,10 +2,10 @@
 /opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf &
 
 # Wait for dashboard to open connection.
-/bin/wait-for-it.sh -t 30 localhost:3000
+/bin/wait-for-it.sh -t 30 localhost:$TYK_DB_LISTENPORT
 
 # Bootstrap Tyk dashboard with default organisation.
-curl -X POST localhost:3000/bootstrap \
+curl -X POST localhost:$TYK_DB_LISTENPORT/bootstrap \
   --data "owner_name=$ORG" \
   --data "owner_slug=$SLUG" \
   --data "email_address=$EMAIL" \
@@ -16,12 +16,12 @@ curl -X POST localhost:3000/bootstrap \
   --data "terms=on"
 
 # Get organisation ID.
-ORG=`curl -X GET http://localhost:3000/admin/organisations \
+ORG=`curl -X GET localhost:$TYK_DB_LISTENPORT/admin/organisations \
   --header "admin-auth: 12345" | \
   jq -r '.organisations[0].id'`
 
 # Create a new admin user and get user access token.
-TOKEN=`curl -X POST http://localhost:3000/admin/users \
+TOKEN=`curl -X POST localhost:$TYK_DB_LISTENPORT/admin/users \
   --header "admin-auth: 12345" \
   --data "{
     \"org_id\": \"$ORG\",
@@ -34,19 +34,19 @@ TOKEN=`curl -X POST http://localhost:3000/admin/users \
   jq -r '.Message'`
 
 # Create Portal.
-curl -X POST localhost:3000/api/portal/configuration \
+curl -X POST localhost:$TYK_DB_LISTENPORT/api/portal/configuration \
   --header "Authorization: $TOKEN" \
   --data "{}"
 
 # Initialize Catalogue.
-curl -X POST localhost:3000/api/portal/catalogue \
+curl -X POST localhost:$TYK_DB_LISTENPORT/api/portal/catalogue \
   --header "Authorization: $TOKEN" \
   --data "{
     \"org_id\": \"$ORG\"
   }"
 
 # Create Portal Home Page.
-curl -X POST http://localhost:3000/api/portal/pages \
+curl -X POST localhost:$TYK_DB_LISTENPORT/api/portal/pages \
   --header "Authorization: $TOKEN" \
   --data "{
     \"is_homepage\": true,
@@ -75,7 +75,7 @@ curl -X POST http://localhost:3000/api/portal/pages \
   }"
 
 # Set Protal CNAME.
-curl -X PUT localhost:3000/api/portal/cname \
+curl -X PUT localhost:$TYK_DB_LISTENPORT/api/portal/cname \
   --header "Authorization: $TOKEN" \
   --data "{
     \"cname\": \"\"
