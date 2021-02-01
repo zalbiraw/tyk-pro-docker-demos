@@ -21,3 +21,6 @@ A repo for all different Tyk + different platforms demo.
 
 - Portal `demos/portal`
     - **Custom Templates** `/custom-templates`
+
+- Services `demos/services`
+    - **ElastiCache Redis Cluster** `/elasticache-redis-cluster`
