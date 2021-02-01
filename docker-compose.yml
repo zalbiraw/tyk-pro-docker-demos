@@ -13,6 +13,10 @@ services:
       - TYK_DB_APICONFIG_PORT=${GATEWAY_PORT}
       - TYK_DB_HOSTCONFIG_HOSTNAME=${HOSTNAME}
       - TYK_DB_HOSTCONFIG_GATEWAYHOSTNAME=${OVERRIDE_HOSTNAME}
+      - TYK_DB_REDISHOST=${REDIS_HOST}
+      - TYK_DB_REDISPORT=${REDIS_PORT}
+      - TYK_DB_ENABLECLUSTER=false
+      - TYK_DB_REDISUSESSL=${REDIS_USE_SSL}
       - ORG=${ORG}
       - SLUG=${SLUG}
       - EMAIL=${EMAIL}
@@ -21,7 +25,7 @@ services:
       - PASSWORD=${PASSWORD}
 
     ports:
-    - "${MACHINE_DASHBOARD_PORT}:${DASHBOARD_PORT}"
+    - "${DASHBOARD_MACHINE_PORT}:${DASHBOARD_PORT}"
     - "5000:5000"
 
     volumes:
@@ -38,9 +42,13 @@ services:
       - TYK_GW_LISTENPORT=${GATEWAY_PORT}
       - TYK_GW_POLICIES_POLICYCONNECTIONSTRING=${DASHBOARD_PROTOCOL}://tyk-dashboard:${DASHBOARD_PORT}
       - TYK_GW_DBAPPCONFOPTIONS_CONNECTIONSTRING=${DASHBOARD_PROTOCOL}://tyk-dashboard:${DASHBOARD_PORT}
+      - TYK_GW_STORAGE_HOST=${REDIS_HOST}
+      - TYK_GW_STORAGE_PORT=${REDIS_PORT}
+      - TYK_GW_STORAGE_ENABLECLUSTER=false
+      - TYK_GW_STORAGE_USESSL=${REDIS_USE_SSL}
 
     ports:
-    - "${MACHINE_GATEWAY_PORT}:${GATEWAY_PORT}"
+    - "${GATEWAY_MACHINE_PORT}:${GATEWAY_PORT}"
 
     volumes:
     - ./confs/tyk.conf:/opt/tyk-gateway/tyk.conf
@@ -51,6 +59,12 @@ services:
   tyk-pump:
     image: tykio/tyk-pump-docker-pub:latest
     container_name: tyk-pump
+
+    environment:
+      - TYK_PMP_ANALYTICSSTORAGECONFIG_HOST=${REDIS_HOST}
+      - TYK_PMP_ANALYTICSSTORAGECONFIG_PORT=${REDIS_PORT}
+      - TYK_PMP_ANALYTICSSTORAGECONFIG_ENABLECLUSTER=false
+      - TYK_PMP_ANALYTICSSTORAGECONFIG_REDISUSESSL=${REDIS_USE_SSL}
 
     volumes:
     - ./confs/pump.conf:/opt/tyk-pump/pump.conf
@@ -63,7 +77,7 @@ services:
     container_name: redis
 
     ports:
-    - "6379:6379"
+    - "${REDIS_MACHINE_PORT}:${REDIS_PORT}"
 
     networks:
     - tyk
