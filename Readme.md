@@ -1,5 +1,5 @@
-# Tyk/Docker Demos Repo
-A repo for all different Tyk + different platforms demo.
+# Tyk Pro Docker Demos Repo
+A repo for Tyk Pro with different platforms demos.
 
 ## Requirements
 1. [Tyk Pro](https://pages.tyk.io/en/sign-up-for-tyk-on-prem-licence) trial license key.
