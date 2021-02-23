@@ -35,7 +35,7 @@ services:
     - tyk
 
   tyk-gateway:
-    image: tykio/tyk-gateway:latest
+    image: tykio/tyk-gateway:v3.1.2
     container_name: tyk-gateway
 
     environment:

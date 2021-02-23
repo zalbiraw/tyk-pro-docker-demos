@@ -3,4 +3,4 @@ version: '3.3'
 services:
   tyk-dashboard:
     volumes:
-    - ./demos/portal/custom-templates/src/:/opt/tyk-dashboard/portal/templates/
+    - ./demos/portal/custom-templates/src/customTemplate.html:/opt/tyk-dashboard/portal/templates/customTemplate.html
