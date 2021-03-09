@@ -20,6 +20,9 @@ A repo for Tyk Pro with different platforms demos.
 - Backend Servers `demos/backend-servers`
     - **Express.js** `/express-js`
 
+- Security `demos/security`
+    - **HMAC Upstream** `/hmac-upstream`
+
 - Portal `demos/portal`
     - **Custom Templates** `/custom-templates`
 
