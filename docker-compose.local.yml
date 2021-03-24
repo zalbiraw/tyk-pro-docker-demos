@@ -1,5 +1,9 @@
 version: '3.3'
 services:
+  tyk-dashboard:
+    environment:
+      - TYK_DB_TYKAPI_HOST=${GATEWAY_PROTOCOL}://tyk-gateway
+
   tyk-gateway:
     environment:
       - TYK_GW_POLICIES_POLICYCONNECTIONSTRING=${DASHBOARD_PROTOCOL}://tyk-dashboard:${DASHBOARD_PORT}
