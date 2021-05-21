@@ -1,8 +1,13 @@
 # Start Tyk Dashboard.
-/opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf &
+if [ "$1" = "dev" ]; then
+  echo "Development mode selected"
+  go run main.go &
+else
+  /opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf &
+fi
 
 # Wait for dashboard to open connection.
-/bin/wait-for-it.sh -t 30 localhost:$TYK_DB_LISTENPORT
+/bin/wait-for-it.sh -t 300 localhost:$TYK_DB_LISTENPORT
 
 # Bootstrap Tyk dashboard with default organisation.
 curl -X POST localhost:$TYK_DB_LISTENPORT/bootstrap \
@@ -82,8 +87,17 @@ curl -X PUT localhost:$TYK_DB_LISTENPORT/api/portal/cname \
   }"
 
 # Overwrite init script.
-echo "/opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf" > /bin/start.sh
+if [ "$1" = "dev" ]; then
+  echo "go run main.go" > /bin/start.sh
+else
+  echo "/opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf" > /bin/start.sh
+fi
 
 # Restart Tyk Dashboard
-kill `ps | grep "tyk-analytics" | awk '{ print $1 }'`
-/opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf
+if [ "$1" = "dev" ]; then
+  kill `ps | grep "go run main.go" | awk '{ print $1 }'`
+  go run main.go
+else
+  kill `ps | grep "tyk-analytics" | awk '{ print $1 }'`
+  /opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf
+fi

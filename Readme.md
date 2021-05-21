@@ -13,6 +13,10 @@ A repo for Tyk Pro with different platforms demos.
 **NOTE:** This will only run the Tyk Pro tools. If you want to run any of the other demos please check out the readme file inside their respective folders.
 4. Navigate to [http://localhost:3000](http://localhost:3000) in your browser to access the Tyk Dashboard.
 
+## Docker Compose files
+- `docker-compose.local.yml`: allows you to run environment locally
+- `docker-compose.dev.dashboard.yml`: allows you to run dashboard dev environment
+
 ## Platforms
 - Analytics `demos/analytics`
     - **Datadog** `/datadog`
