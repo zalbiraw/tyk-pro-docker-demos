@@ -1,10 +1,10 @@
-FROM        tykio/tyk-dashboard:latest
+FROM        tykio/tyk-dashboard:v3.2.1
 
 MAINTAINER  Zaid Albirawi
 
 RUN         echo "deb http://us.archive.ubuntu.com/ubuntu vivid main universe" >> sudo vim /etc/apt/sources.list
 RUN         apt update
-RUN         apt install -y jq procps
+RUN         apt install -y curl jq procps
 
 COPY        ./scripts/wait-for-it.sh /bin/
 COPY        ./tyk-dashboard/scripts/init.sh /bin/start.sh
