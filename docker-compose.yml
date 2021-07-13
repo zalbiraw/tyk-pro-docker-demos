@@ -17,6 +17,7 @@ services:
       - TYK_DB_REDISPORT=${REDIS_PORT}
       - TYK_DB_ENABLECLUSTER=false
       - TYK_DB_REDISUSESSL=${REDIS_USE_SSL}
+      - TYK_DB_ENABLEOWNERSHIP=true
       - ORG=${ORG}
       - SLUG=${SLUG}
       - EMAIL=${EMAIL}
