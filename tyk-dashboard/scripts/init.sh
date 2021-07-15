@@ -93,6 +93,11 @@ else
   echo "/opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf" > /bin/start.sh
 fi
 
+echo "\nRestarting Dashboard...\n"
+echo TYK_TOKEN="$TOKEN" >> $HOME/.bashrc
+
+bash /opt/tyk-dashboard/resources/apply.sh
+
 # Restart Tyk Dashboard
 if [ "$1" = "dev" ]; then
   kill `ps | grep "go run main.go" | awk '{ print $1 }'`
