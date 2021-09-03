@@ -27,6 +27,9 @@ A repo for Tyk Pro with different platforms demos.
 - Security `demos/security`
     - **HMAC Upstream** `/hmac-upstream`
 
+- Security `demos/internal-auth`
+    - **Internal Auth** `/internal-auth`
+
 - Portal `demos/portal`
     - **Custom Templates** `/custom-templates`
 
