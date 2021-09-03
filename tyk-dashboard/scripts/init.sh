@@ -86,6 +86,43 @@ curl -X PUT localhost:$TYK_DB_LISTENPORT/api/portal/cname \
     \"cname\": \"\"
   }"
 
+# Create second Org.
+ORG=`curl -X POST localhost:$TYK_DB_LISTENPORT/admin/organisations \
+  --header "admin-auth: 12345" \
+  --data "{
+    \"owner_name\": \"Test Organisation 1\",
+    \"owner_slug\": \"test.organisation1\",
+    \"cname\": \"test.organisation1\",
+    \"cname_enabled\": true
+  }" | \
+  jq -r '.Meta'`
+
+# Create a new admin user and get user access token.
+USERID=`curl -X POST localhost:$TYK_DB_LISTENPORT/admin/users \
+  --header "admin-auth: 12345" \
+  --data "{
+    \"org_id\": \"$ORG\",
+    \"first_name\": \"Org 1\",
+    \"last_name\": \"Admin\",
+    \"email_address\": \"admin.org1@tyk.io\",
+    \"active\": true,
+    \"user_permissions\": { \"IsAdmin\": \"admin\" }
+  }" | \
+  jq -r '.Meta.id'`
+
+# Set users password.
+curl -X PUT localhost:$TYK_DB_LISTENPORT/admin/users/$USERID \
+  --header "admin-auth: 12345" \
+  --data "{
+    \"org_id\": \"$ORG\",
+    \"first_name\": \"Org 1\",
+    \"last_name\": \"Admin\",
+    \"email_address\": \"admin.org1@tyk.io\",
+    \"password\": \"$PASSWORD\",
+    \"active\": true,
+    \"user_permissions\": { \"IsAdmin\": \"admin\" }
+  }"
+
 # Overwrite init script.
 if [ "$1" = "dev" ]; then
   echo "go run main.go" > /bin/start.sh
