@@ -18,6 +18,7 @@ services:
       - TYK_DB_ENABLECLUSTER=false
       - TYK_DB_REDISUSESSL=${REDIS_USE_SSL}
       - TYK_DB_ENABLEOWNERSHIP=true
+      - TYK_DB_ENABLEUPDATEKEYBYHASH=true
       - ORG=${ORG}
       - SLUG=${SLUG}
       - EMAIL=${EMAIL}
@@ -28,7 +29,6 @@ services:
 
     ports:
     - "${DASHBOARD_MACHINE_PORT}:${DASHBOARD_PORT}"
-    - "5000:5000"
 
     volumes:
     - ./confs/tyk_analytics.conf:/opt/tyk-dashboard/tyk_analytics.conf
