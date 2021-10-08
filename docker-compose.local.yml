@@ -4,7 +4,18 @@ services:
     environment:
       - TYK_DB_TYKAPI_HOST=${GATEWAY_PROTOCOL}://tyk-gateway
 
+    volumes:
+    - ./confs/tyk_analytics.conf:/opt/tyk-dashboard/tyk_analytics.conf
+    - ./resources:/opt/tyk-dashboard/resources
+
   tyk-gateway:
     environment:
       - TYK_GW_POLICIES_POLICYCONNECTIONSTRING=${DASHBOARD_PROTOCOL}://tyk-dashboard:${DASHBOARD_PORT}
       - TYK_GW_DBAPPCONFOPTIONS_CONNECTIONSTRING=${DASHBOARD_PROTOCOL}://tyk-dashboard:${DASHBOARD_PORT}
+
+    volumes:
+    - ./confs/tyk.conf:/opt/tyk-gateway/tyk.conf
+
+  tyk-pump:
+    volumes:
+    - ./confs/pump.conf:/opt/tyk-pump/pump.conf

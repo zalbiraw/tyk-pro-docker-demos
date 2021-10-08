@@ -30,15 +30,14 @@ services:
     ports:
     - "${DASHBOARD_MACHINE_PORT}:${DASHBOARD_PORT}"
 
-    volumes:
-    - ./confs/tyk_analytics.conf:/opt/tyk-dashboard/tyk_analytics.conf
-    - ./resources:/opt/tyk-dashboard/resources
-
     networks:
     - tyk
 
   tyk-gateway:
-    image: tykio/tyk-gateway:v3.2.1
+    build:
+      context: .
+      dockerfile: ./tyk-gateway/Dockerfile
+
     container_name: tyk-gateway
 
     environment:
@@ -53,14 +52,14 @@ services:
     ports:
     - "${GATEWAY_MACHINE_PORT}:${GATEWAY_PORT}"
 
-    volumes:
-    - ./confs/tyk.conf:/opt/tyk-gateway/tyk.conf
-
     networks:
     - tyk
 
   tyk-pump:
-    image: tykio/tyk-pump-docker-pub:latest
+    build:
+      context: .
+      dockerfile: ./tyk-pump/Dockerfile
+
     container_name: tyk-pump
 
     environment:
@@ -68,9 +67,6 @@ services:
       - TYK_PMP_ANALYTICSSTORAGECONFIG_PORT=${REDIS_PORT}
       - TYK_PMP_ANALYTICSSTORAGECONFIG_ENABLECLUSTER=false
       - TYK_PMP_ANALYTICSSTORAGECONFIG_REDISUSESSL=${REDIS_USE_SSL}
-
-    volumes:
-    - ./confs/pump.conf:/opt/tyk-pump/pump.conf
 
     networks:
     - tyk

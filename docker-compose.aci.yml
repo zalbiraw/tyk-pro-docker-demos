@@ -1,0 +1,65 @@
+version: '3.3'
+services:
+  tyk-dashboard:
+    image: tykregistry.azurecr.io/dashboard
+
+    environment:
+      - TYK_DB_TYKAPI_HOST=${GATEWAY_PROTOCOL}://tyk-gateway
+
+    deploy:
+      resources:
+        reservations:
+          cpus: '.5'
+          memory: 1G
+        limits:
+          cpus: '.5'
+          memory: 1G
+
+
+  tyk-gateway:
+    image: tykregistry.azurecr.io/gateway
+
+    environment:
+      - TYK_GW_POLICIES_POLICYCONNECTIONSTRING=${DASHBOARD_PROTOCOL}://tyk-dashboard:${DASHBOARD_PORT}
+      - TYK_GW_DBAPPCONFOPTIONS_CONNECTIONSTRING=${DASHBOARD_PROTOCOL}://tyk-dashboard:${DASHBOARD_PORT}
+
+    deploy:
+      resources:
+        reservations:
+          cpus: '.5'
+          memory: 1G
+        limits:
+          cpus: '.5'
+          memory: 1G
+
+  tyk-pump:
+    image: tykregistry.azurecr.io/pump
+
+    deploy:
+      resources:
+        reservations:
+          cpus: '.5'
+          memory: 1G
+        limits:
+          cpus: '.5'
+          memory: 1G
+
+  tyk-redis:
+    deploy:
+      resources:
+        reservations:
+          cpus: '.5'
+          memory: 1G
+        limits:
+          cpus: '.5'
+          memory: 1G
+
+  tyk-mongo:
+    deploy:
+      resources:
+        reservations:
+          cpus: '.5'
+          memory: 1G
+        limits:
+          cpus: '.5'
+          memory: 1G
