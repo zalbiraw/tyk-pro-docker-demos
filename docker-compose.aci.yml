@@ -15,10 +15,7 @@ services:
           cpus: '.5'
           memory: 1G
 
-
   tyk-gateway:
-    image: tykregistry.azurecr.io/gateway
-
     environment:
       - TYK_GW_POLICIES_POLICYCONNECTIONSTRING=${DASHBOARD_PROTOCOL}://tyk-dashboard:${DASHBOARD_PORT}
       - TYK_GW_DBAPPCONFOPTIONS_CONNECTIONSTRING=${DASHBOARD_PROTOCOL}://tyk-dashboard:${DASHBOARD_PORT}
@@ -33,8 +30,6 @@ services:
           memory: 1G
 
   tyk-pump:
-    image: tykregistry.azurecr.io/pump
-
     deploy:
       resources:
         reservations:

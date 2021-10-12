@@ -7,7 +7,3 @@ services:
       args:
         GH_USERNAME: ${GH_USERNAME}
         GH_PASSWORD: ${GH_PASSWORD}
-    container_name: tyk-dashboard
-
-    volumes:
-    - ./confs/tyk_analytics.dev.conf:/go/src/tyk-analytics/tyk_analytics.conf
