@@ -11,3 +11,15 @@ services:
     environment:
       - TYK_GW_POLICIES_POLICYCONNECTIONSTRING=${DASHBOARD_PROTOCOL}://tyk-dashboard:${DASHBOARD_PORT}
       - TYK_GW_DBAPPCONFOPTIONS_CONNECTIONSTRING=${DASHBOARD_PROTOCOL}://tyk-dashboard:${DASHBOARD_PORT}
+
+  tyk-redis:
+    volumes:
+    - redis-data:/data
+
+  tyk-mongo:
+    volumes:
+    - mongo-data:/data/db
+
+volumes:
+  redis-data:
+  mongo-data:
