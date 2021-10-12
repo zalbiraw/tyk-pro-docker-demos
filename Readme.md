@@ -16,7 +16,7 @@ A repo for Tyk Pro with different platforms demos.
 ## Docker Compose files
 - `docker-compose.local.yml`: allows you to run environment locally
 - `docker-compose.dev.dashboard.yml`: allows you to run dashboard dev environment
-
+- `docker-compose.aci.yml`: allows you to run setup in Azure Container Instance
 ## Platforms
 - Analytics `demos/analytics`
     - **Datadog** `/datadog`
