@@ -40,6 +40,9 @@ services:
           memory: 1G
 
   tyk-redis:
+    volumes:
+    - redis-data:/data
+
     deploy:
       resources:
         reservations:
@@ -50,6 +53,9 @@ services:
           memory: 1G
 
   tyk-mongo:
+    volumes:
+    - mongo-data:/data/db
+
     deploy:
       resources:
         reservations:
@@ -58,3 +64,16 @@ services:
         limits:
           cpus: '.5'
           memory: 1G
+
+volumes:
+  redis-data:
+    driver: azure_file
+    driver_opts:
+      share_name: redis
+      storage_account_name: tykacistorage
+
+  mongo-data:
+    driver: azure_file
+    driver_opts:
+      share_name: mongo
+      storage_account_name: tykacistorage
