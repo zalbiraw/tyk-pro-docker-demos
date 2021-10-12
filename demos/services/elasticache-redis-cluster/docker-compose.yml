@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  tyk-dashboard:
+    environment:
+      - TYK_DB_ENABLECLUSTER=true
+      - TYK_DB_REDISADDRS=${REDIS_CLUSTER_CONF_ENDPOINT}
+
+  tyk-gateway:
+    environment:
+      - TYK_GW_STORAGE_ENABLECLUSTER=true
+      - TYK_GW_STORAGE_ADDRS=${REDIS_CLUSTER_CONF_ENDPOINT}
+
+  tyk-pump:
+    environment:
+      - TYK_PMP_ANALYTICSSTORAGECONFIG_ENABLECLUSTER=true
+      - TYK_PMP_ANALYTICSSTORAGECONFIG_ADDRS=${REDIS_CLUSTER_CONF_ENDPOINT}

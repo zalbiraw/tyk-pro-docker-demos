@@ -1,11 +1,16 @@
 # Start Tyk Dashboard.
-/opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf &
+if [ "$1" = "dev" ]; then
+  echo "Development mode selected"
+  go run main.go &
+else
+  /opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf &
+fi
 
 # Wait for dashboard to open connection.
-/bin/wait-for-it.sh -t 30 localhost:3000
+/bin/wait-for-it.sh -t 300 localhost:$TYK_DB_LISTENPORT
 
 # Bootstrap Tyk dashboard with default organisation.
-curl -X POST localhost:3000/bootstrap \
+curl -X POST localhost:$TYK_DB_LISTENPORT/bootstrap \
   --data "owner_name=$ORG" \
   --data "owner_slug=$SLUG" \
   --data "email_address=$EMAIL" \
@@ -16,12 +21,12 @@ curl -X POST localhost:3000/bootstrap \
   --data "terms=on"
 
 # Get organisation ID.
-ORG=`curl -X GET http://localhost:3000/admin/organisations \
+ORG=`curl -X GET localhost:$TYK_DB_LISTENPORT/admin/organisations \
   --header "admin-auth: 12345" | \
   jq -r '.organisations[0].id'`
 
 # Create a new admin user and get user access token.
-TOKEN=`curl -X POST http://localhost:3000/admin/users \
+TOKEN=`curl -X POST localhost:$TYK_DB_LISTENPORT/admin/users \
   --header "admin-auth: 12345" \
   --data "{
     \"org_id\": \"$ORG\",
@@ -34,19 +39,19 @@ TOKEN=`curl -X POST http://localhost:3000/admin/users \
   jq -r '.Message'`
 
 # Create Portal.
-curl -X POST localhost:3000/api/portal/configuration \
+curl -X POST localhost:$TYK_DB_LISTENPORT/api/portal/configuration \
   --header "Authorization: $TOKEN" \
   --data "{}"
 
 # Initialize Catalogue.
-curl -X POST localhost:3000/api/portal/catalogue \
+curl -X POST localhost:$TYK_DB_LISTENPORT/api/portal/catalogue \
   --header "Authorization: $TOKEN" \
   --data "{
     \"org_id\": \"$ORG\"
   }"
 
 # Create Portal Home Page.
-curl -X POST http://localhost:3000/api/portal/pages \
+curl -X POST localhost:$TYK_DB_LISTENPORT/api/portal/pages \
   --header "Authorization: $TOKEN" \
   --data "{
     \"is_homepage\": true,
@@ -75,15 +80,66 @@ curl -X POST http://localhost:3000/api/portal/pages \
   }"
 
 # Set Protal CNAME.
-curl -X PUT localhost:3000/api/portal/cname \
+curl -X PUT localhost:$TYK_DB_LISTENPORT/api/portal/cname \
   --header "Authorization: $TOKEN" \
   --data "{
     \"cname\": \"\"
   }"
 
+# Create second Org.
+ORG=`curl -X POST localhost:$TYK_DB_LISTENPORT/admin/organisations \
+  --header "admin-auth: 12345" \
+  --data "{
+    \"owner_name\": \"Test Organisation 1\",
+    \"owner_slug\": \"test.organisation1\",
+    \"cname\": \"test.organisation1\",
+    \"cname_enabled\": true
+  }" | \
+  jq -r '.Meta'`
+
+# Create a new admin user and get user access token.
+USERID=`curl -X POST localhost:$TYK_DB_LISTENPORT/admin/users \
+  --header "admin-auth: 12345" \
+  --data "{
+    \"org_id\": \"$ORG\",
+    \"first_name\": \"Org 1\",
+    \"last_name\": \"Admin\",
+    \"email_address\": \"admin.org1@tyk.io\",
+    \"active\": true,
+    \"user_permissions\": { \"IsAdmin\": \"admin\" }
+  }" | \
+  jq -r '.Meta.id'`
+
+# Set users password.
+curl -X PUT localhost:$TYK_DB_LISTENPORT/admin/users/$USERID \
+  --header "admin-auth: 12345" \
+  --data "{
+    \"org_id\": \"$ORG\",
+    \"first_name\": \"Org 1\",
+    \"last_name\": \"Admin\",
+    \"email_address\": \"admin.org1@tyk.io\",
+    \"password\": \"$PASSWORD\",
+    \"active\": true,
+    \"user_permissions\": { \"IsAdmin\": \"admin\" }
+  }"
+
 # Overwrite init script.
-echo "/opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf" > /bin/start.sh
+if [ "$1" = "dev" ]; then
+  echo "go run main.go" > /bin/start.sh
+else
+  echo "/opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf" > /bin/start.sh
+fi
+
+echo "\nRestarting Dashboard...\n"
+echo TYK_TOKEN="$TOKEN" >> $HOME/.bashrc
+
+bash /opt/tyk-dashboard/resources/apply.sh
 
 # Restart Tyk Dashboard
-kill `ps | grep "tyk-analytics" | awk '{ print $1 }'`
-/opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf
+if [ "$1" = "dev" ]; then
+  kill `ps | grep "go run main.go" | awk '{ print $1 }'`
+  go run main.go
+else
+  kill `ps | grep "tyk-analytics" | awk '{ print $1 }'`
+  /opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf
+fi

@@ -1,6 +1,0 @@
-version: '3.3'
-
-services:
-  tyk-dashboard:
-    volumes:
-    - ./portal/custom-templates/src/:/opt/tyk-dashboard/portal/templates/

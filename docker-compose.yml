@@ -1,49 +1,76 @@
-version: '3.3'
+version: '3.9'
 services:
   tyk-dashboard:
     build:
       context: .
       dockerfile: ./tyk-dashboard/Dockerfile
+
     container_name: tyk-dashboard
 
     environment:
       - TYK_DB_LICENSEKEY=${TYK_LICENSE_KEY}
+      - TYK_DB_LISTENPORT=${DASHBOARD_PORT}
+      - TYK_DB_TYKAPI_HOST=${GATEWAY_PROTOCOL}://${GATEWAY_HOST}
+      - TYK_DB_TYKAPI_PORT=${GATEWAY_PORT}
+      - TYK_DB_HOSTCONFIG_HOSTNAME=${GATEWAY_HOST}
+      - TYK_DB_HOSTCONFIG_GATEWAYHOSTNAME=${GATEWAY_HOST}:${GATEWAY_PORT}
+      - TYK_DB_REDISHOST=${REDIS_HOST}
+      - TYK_DB_REDISPORT=${REDIS_PORT}
+      - TYK_DB_REDISUSESSL=${REDIS_USE_SSL}
+      - TYK_DB_MONGOURL=mongodb://${MONGO_HOST}:${MONGO_PORT}/tyk_analytics
       - ORG=${ORG}
       - SLUG=${SLUG}
       - EMAIL=${EMAIL}
       - FIRST=${FIRST}
       - LAST=${LAST}
       - PASSWORD=${PASSWORD}
+      - RESOURCES=${RESOURCES}
+
+    env_file:
+      - ./confs/tyk_analytics.env
 
     ports:
-    - "3000:3000"
-    - "5000:5000"
-
-    volumes:
-    - ./confs/tyk_analytics.conf:/opt/tyk-dashboard/tyk_analytics.conf
+    - "${DASHBOARD_MACHINE_PORT}:${DASHBOARD_PORT}"
 
     networks:
     - tyk
 
   tyk-gateway:
-    image: tykio/tyk-gateway:latest
+    image: tykio/tyk-gateway:v3.2.2
     container_name: tyk-gateway
 
-    ports:
-    - "8080:8080"
+    environment:
+      - TYK_GW_LISTENPORT=${GATEWAY_PORT}
+      - TYK_GW_POLICIES_POLICYCONNECTIONSTRING=${DASHBOARD_PROTOCOL}://${DASHBOARD_HOST}:${DASHBOARD_PORT}
+      - TYK_GW_DBAPPCONFOPTIONS_CONNECTIONSTRING=${DASHBOARD_PROTOCOL}://${DASHBOARD_HOST}:${DASHBOARD_PORT}
+      - TYK_GW_STORAGE_HOST=${REDIS_HOST}
+      - TYK_GW_STORAGE_PORT=${REDIS_PORT}
+      - TYK_GW_STORAGE_ENABLECLUSTER=false
+      - TYK_GW_STORAGE_USESSL=${REDIS_USE_SSL}
 
-    volumes:
-    - ./confs/tyk.conf:/opt/tyk-gateway/tyk.conf
+    env_file:
+      - ./confs/tyk.env
+
+    ports:
+    - "${GATEWAY_MACHINE_PORT}:${GATEWAY_PORT}"
 
     networks:
     - tyk
 
   tyk-pump:
-    image: tykio/tyk-pump-docker-pub:latest
+    image: tykio/tyk-pump-docker-pub:v1.5
     container_name: tyk-pump
 
-    volumes:
-    - ./confs/pump.conf:/opt/tyk-pump/pump.conf
+    environment:
+      - TYK_PMP_ANALYTICSSTORAGECONFIG_HOST=${REDIS_HOST}
+      - TYK_PMP_ANALYTICSSTORAGECONFIG_PORT=${REDIS_PORT}
+      - TYK_PMP_ANALYTICSSTORAGECONFIG_REDISUSESSL=${REDIS_USE_SSL}
+      - PMP_MONGO_MONGOURL=mongodb://${MONGO_HOST}:${MONGO_PORT}/tyk_analytics
+      - PMP_MONGOAGG_MONGOURL=mongodb://${MONGO_HOST}:${MONGO_PORT}/tyk_analytics
+      - TYK_PMP_UPTIMEPUMPCONFIG_MONGOURL=mongodb://${MONGO_HOST}:${MONGO_PORT}/tyk_analytics
+
+    env_file:
+      - ./confs/pump.env
 
     networks:
     - tyk
@@ -53,7 +80,7 @@ services:
     container_name: redis
 
     ports:
-    - "6379:6379"
+    - "${REDIS_MACHINE_PORT}:${REDIS_PORT}"
 
     networks:
     - tyk
@@ -65,7 +92,7 @@ services:
     command: ["mongod", "--smallfiles"]
 
     ports:
-    - "27017:27017"
+    - "${MONGO_MACHINE_PORT}:${MONGO_PORT}"
 
     networks:
     - tyk

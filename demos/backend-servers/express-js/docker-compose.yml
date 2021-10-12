@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+
+  express-js:
+    build:
+      context: .
+      dockerfile: ./demos/backend-servers/express-js/Dockerfile
+
+    container_name: express-js
+
+    volumes:
+    - ./demos/backend-servers/express-js/src/index.js:/var/www/index.js
+    - ./demos/backend-servers/express-js/src/package.json:/var/www/package.json
+    - ./demos/backend-servers/express-js/src/package-lock.json:/var/www/package-lock.json
+
+    ports:
+      - "3030:3030"
+
+    networks:
+    - tyk
