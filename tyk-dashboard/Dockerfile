@@ -1,4 +1,4 @@
-FROM        tykio/tyk-dashboard:latest
+FROM        tykio/tyk-dashboard:v3.2.2
 
 MAINTAINER  Zaid Albirawi
 

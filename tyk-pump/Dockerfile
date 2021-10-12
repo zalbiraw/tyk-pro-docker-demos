@@ -1,4 +1,4 @@
-FROM        tykio/tyk-pump-docker-pub:latest
+FROM        tykio/tyk-pump-docker-pub:v1.5
 
 MAINTAINER  Zaid Albirawi
 
