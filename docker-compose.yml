@@ -58,15 +58,15 @@ services:
     - tyk
 
   tyk-pump:
-    image: tykio/tyk-pump-docker-pub:v1.5
+    image: tykio/tyk-pump-docker-pub:v1.5.1-rc2
     container_name: tyk-pump
 
     environment:
       - TYK_PMP_ANALYTICSSTORAGECONFIG_HOST=${REDIS_HOST}
       - TYK_PMP_ANALYTICSSTORAGECONFIG_PORT=${REDIS_PORT}
       - TYK_PMP_ANALYTICSSTORAGECONFIG_REDISUSESSL=${REDIS_USE_SSL}
-      - PMP_MONGO_MONGOURL=mongodb://${MONGO_HOST}:${MONGO_PORT}/tyk_analytics
-      - PMP_MONGOAGG_MONGOURL=mongodb://${MONGO_HOST}:${MONGO_PORT}/tyk_analytics
+      - TYK_PMP_PUMPS_MONGO_META_MONGOURL=mongodb://${MONGO_HOST}:${MONGO_PORT}/tyk_analytics
+      - TYK_PMP_PUMPS_MONGOAGG_META_MONGOURL=mongodb://${MONGO_HOST}:${MONGO_PORT}/tyk_analytics
       - TYK_PMP_UPTIMEPUMPCONFIG_MONGOURL=mongodb://${MONGO_HOST}:${MONGO_PORT}/tyk_analytics
 
     env_file:
