@@ -25,9 +25,7 @@ openssl req \
   -subj "/C=CA/ST=Ontario/L=London/O=Tyk/CN=tyk.local/emailAddress=zaid@tyk.io"
 ```
 
-3. Generate SSL certificates:
-
-#### Generate private key
+3. Generate SSL certificate private key:
 
 ```
 openssl genrsa \
@@ -35,7 +33,7 @@ openssl genrsa \
   2048
 ```
 
-#### Generate a certificate-signing request
+4. Generate SSL certificate certificate-signing request:
 
 ```
 openssl req \
@@ -45,7 +43,7 @@ openssl req \
   -subj "/C=CA/ST=Ontario/L=London/O=Tyk/CN=tyk.local/emailAddress=zaid@tyk.io,challengePassword=topsecretpassword"
 ```
 
-#### Generate signed certificate
+5. Generate SSL certificate:
 
 ```
 openssl x509 \
@@ -61,14 +59,25 @@ openssl x509 \
   -passin pass:topsecretpassword
 ```
 
-4. Add Certificate Authority to Keychain Access
+6. Add Certificate Authority to Keychain Access:
 
 ```
-sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain ./demos/security/tyk-ssl/certs/tykCA.pem
+sudo security add-trusted-cert \
+  -d \
+  -r trustRoot \
+  -k /Library/Keychains/System.keychain \
+  ./demos/security/tyk-ssl/certs/tykCA.pem
 ```
 
-5. Run docker-compose from the repo root using the following command `docker-compose -f docker-compose.yml -f demos/security/tyk-ssl/docker-compose.yml up`.
+7. Add `dashboard.tyk.local` and `gateway/tyk.local` to your `/etc/hosts` file.
 
-6. Navigate to [https://dashboard.tyk.local:3000](https://dashboard.tyk.local:3000) in your browser to access the Tyk Dashboard.
+```
+127.0.0.1 gateway.tyk.local
+127.0.0.1 dashboard.tyk.local
+```
 
-7. Navigate to [https://gateway.tyk.local:8080](https://gateway.tyk.local:8080) in your browser to access the Tyk Gateway.
+8. Run docker-compose from the repo root using the following command `docker-compose -f docker-compose.yml -f demos/security/tyk-ssl/docker-compose.yml up`.
+
+9. Navigate to [https://dashboard.tyk.local:3000](https://dashboard.tyk.local:3000) in your browser to access the Tyk Dashboard.
+
+10. Navigate to [https://gateway.tyk.local:8080](https://gateway.tyk.local:8080) in your browser to access the Tyk Gateway.
