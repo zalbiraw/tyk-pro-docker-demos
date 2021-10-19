@@ -24,12 +24,15 @@ A repo for Tyk Pro with different platforms demos.
 - Backend Servers `demos/backend-servers`
     - **Express.js** `/express-js`
 
-- Security `demos/security`
-    - **HMAC Upstream** `/hmac-upstream`
-    - **Internal Auth** `/internal-auth`
+- Deployments `demos/deployments`
+    - **ACI** `/aci`
 
 - Portal `demos/portal`
     - **Custom Templates** `/custom-templates`
+
+- Security `demos/security`
+    - **HMAC Upstream** `/hmac-upstream`
+    - **Internal Auth** `/internal-auth`
 
 - Services `demos/services`
     - **ElastiCache Redis Cluster** `/elasticache-redis-cluster`
