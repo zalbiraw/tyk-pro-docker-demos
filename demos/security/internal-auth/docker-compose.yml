@@ -13,12 +13,12 @@ services:
     container_name: internal-auth
 
     volumes:
-    - ./demos/security/internal-auth/src/index.js:/var/www/index.js
-    - ./demos/security/internal-auth/src/package.json:/var/www/package.json
-    - ./demos/security/internal-auth/src/package-lock.json:/var/www/package-lock.json
+      - ./demos/security/internal-auth/src/index.js:/var/www/index.js
+      - ./demos/security/internal-auth/src/package.json:/var/www/package.json
+      - ./demos/security/internal-auth/src/package-lock.json:/var/www/package-lock.json
 
     ports:
       - "3030:3030"
 
     networks:
-    - tyk
+      - tyk

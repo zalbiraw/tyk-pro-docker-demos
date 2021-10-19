@@ -41,7 +41,7 @@ services:
 
   tyk-redis:
     volumes:
-    - redis-data:/data
+      - redis-data:/data
 
     deploy:
       resources:
@@ -54,7 +54,7 @@ services:
 
   tyk-mongo:
     volumes:
-    - mongo-data:/data/db
+      - mongo-data:/data/db
 
     deploy:
       resources:

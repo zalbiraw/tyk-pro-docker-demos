@@ -1,7 +1,6 @@
 version: '3.9'
 
 services:
-
   hmac-upstream:
     build:
       context: .
@@ -10,12 +9,12 @@ services:
     container_name: hmac-upstream
 
     volumes:
-    - ./demos/security/hmac-upstream/src/index.js:/var/www/index.js
-    - ./demos/security/hmac-upstream/src/package.json:/var/www/package.json
-    - ./demos/security/hmac-upstream/src/package-lock.json:/var/www/package-lock.json
+      - ./demos/security/hmac-upstream/src/index.js:/var/www/index.js
+      - ./demos/security/hmac-upstream/src/package.json:/var/www/package.json
+      - ./demos/security/hmac-upstream/src/package-lock.json:/var/www/package-lock.json
 
     ports:
       - "3030:3030"
 
     networks:
-    - tyk
+      - tyk

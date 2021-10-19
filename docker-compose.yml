@@ -30,10 +30,10 @@ services:
       - ./confs/tyk_analytics.env
 
     ports:
-    - "${DASHBOARD_MACHINE_PORT}:${DASHBOARD_PORT}"
+      - "${DASHBOARD_MACHINE_PORT}:${DASHBOARD_PORT}"
 
     networks:
-    - tyk
+      - tyk
 
   tyk-gateway:
     image: tykio/tyk-gateway:v3.2.2
@@ -52,10 +52,10 @@ services:
       - ./confs/tyk.env
 
     ports:
-    - "${GATEWAY_MACHINE_PORT}:${GATEWAY_PORT}"
+      - "${GATEWAY_MACHINE_PORT}:${GATEWAY_PORT}"
 
     networks:
-    - tyk
+      - tyk
 
   tyk-pump:
     image: tykio/tyk-pump-docker-pub:v1.5.1-rc2
@@ -73,17 +73,17 @@ services:
       - ./confs/pump.env
 
     networks:
-    - tyk
+      - tyk
 
   tyk-redis:
     image: redis
     container_name: redis
 
     ports:
-    - "${REDIS_MACHINE_PORT}:${REDIS_PORT}"
+      - "${REDIS_MACHINE_PORT}:${REDIS_PORT}"
 
     networks:
-    - tyk
+      - tyk
 
   tyk-mongo:
     image: mongo:3.2
@@ -92,10 +92,10 @@ services:
     command: ["mongod", "--smallfiles"]
 
     ports:
-    - "${MONGO_MACHINE_PORT}:${MONGO_PORT}"
+      - "${MONGO_MACHINE_PORT}:${MONGO_PORT}"
 
     networks:
-    - tyk
+      - tyk
 
 networks:
   tyk:

@@ -5,7 +5,7 @@ services:
       - TYK_DB_TYKAPI_HOST=${GATEWAY_PROTOCOL}://tyk-gateway
 
     volumes:
-    - ./resources:/opt/tyk-dashboard/resources
+      - ./resources:/opt/tyk-dashboard/resources
 
   tyk-gateway:
     environment:
@@ -14,11 +14,11 @@ services:
 
   tyk-redis:
     volumes:
-    - redis-data:/data
+      - redis-data:/data
 
   tyk-mongo:
     volumes:
-    - mongo-data:/data/db
+      - mongo-data:/data/db
 
 volumes:
   redis-data:
