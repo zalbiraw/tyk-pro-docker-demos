@@ -33,6 +33,7 @@ A repo for Tyk Pro with different platforms demos.
 - Security `demos/security`
     - **HMAC Upstream** `/hmac-upstream`
     - **Internal Auth** `/internal-auth`
+    - **Tyk self-signed certs SSL Setup** `/tyk-ssl`
 
 - Services `demos/services`
     - **ElastiCache Redis Cluster** `/elasticache-redis-cluster`
