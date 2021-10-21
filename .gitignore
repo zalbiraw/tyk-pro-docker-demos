@@ -3,3 +3,6 @@
 **/*.html
 !**/src/customTemplate.html
 **/*.pem
+**/*.key
+**/*.csr
+**/*.crt

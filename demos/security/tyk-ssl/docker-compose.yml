@@ -11,8 +11,8 @@ services:
       - TYK_DB_HOSTCONFIG_GENERATEHTTPS=true
 
     volumes:
-      - ./demos/security/tyk-ssl/certs/dashboard.tyk.local.cert.pem:/etc/ssl/certs/dashboard.tyk.local.cert.pem
-      - ./demos/security/tyk-ssl/certs/dashboard.tyk.local.key.pem:/etc/ssl/certs/dashboard.tyk.local.key.pem
+      - ./demos/security/tyk-ssl/certs/tyk.local.crt:/etc/ssl/certs/tyk.local.crt
+      - ./demos/security/tyk-ssl/certs/tyk.local.key:/etc/ssl/certs/tyk.local.key
       - ./demos/security/tyk-ssl/confs/tyk_analytics.conf:/opt/tyk-dashboard/tyk_analytics.conf
 
   tyk-gateway:
@@ -23,6 +23,6 @@ services:
       - TYK_GW_HTTPSERVEROPTIONS_SSLINSECURESKIPVERIFY=true
 
     volumes:
-      - ./demos/security/tyk-ssl/certs/gateway.tyk.local.cert.pem:/etc/ssl/certs/gateway.tyk.local.cert.pem
-      - ./demos/security/tyk-ssl/certs/gateway.tyk.local.key.pem:/etc/ssl/certs/gateway.tyk.local.key.pem
+      - ./demos/security/tyk-ssl/certs/tyk.local.crt:/etc/ssl/certs/tyk.local.crt
+      - ./demos/security/tyk-ssl/certs/tyk.local.key:/etc/ssl/certs/tyk.local.key
       - ./demos/security/tyk-ssl/confs/tyk.conf:/opt/tyk-gateway/tyk.conf
