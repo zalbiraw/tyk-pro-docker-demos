@@ -3,7 +3,7 @@ services:
   tyk-dashboard:
     build:
       context: .
-      dockerfile: ./tyk-dashboard/Dockerfile.dev
+      dockerfile: ./demos/development/dashboard/Dockerfile
       args:
         GH_USERNAME: ${GH_USERNAME}
-        GH_PASSWORD: ${GH_PASSWORD}
+        GH_TOKEN: ${GH_TOKEN}

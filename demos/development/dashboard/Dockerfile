@@ -5,9 +5,9 @@ MAINTAINER  Zaid Albirawi
 WORKDIR     /go/src
 
 ARG         GH_USERNAME
-ARG         GH_PASSWORD
+ARG         GH_TOKEN
 
-RUN         git clone https://$GH_USERNAME:$GH_PASSWORD@github.com/TykTechnologies/tyk-analytics
+RUN         git clone https://$GH_USERNAME:$GH_TOKEN@github.com/TykTechnologies/tyk-analytics
 
 WORKDIR     /go/src/tyk-analytics
 
