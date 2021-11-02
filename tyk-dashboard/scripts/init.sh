@@ -3,7 +3,7 @@ if [ "$1" = "dev" ]; then
   echo "Development mode selected"
   go run main.go &
 else
-  sleep 60 && /opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf &
+  /opt/tyk-dashboard/tyk-analytics --conf=/opt/tyk-dashboard/tyk_analytics.conf &
 fi
 
 # Wait for dashboard to open connection.
