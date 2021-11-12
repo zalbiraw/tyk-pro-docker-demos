@@ -10,9 +10,12 @@ services:
 
     container_name: tyk-portal
 
-    entrypoint: ./raava -bootstrap -user=${EMAIL} -pass=${PASSWORD} -provider-name "TykPro@localhost" -provider-type "tyk-pro" -provider-data '{"URL":"http://localhost:${PORTAL_PORT}","Secret":"${PORTAL_USER_TOKEN}","OrgID":"${PORTAL_ORG_ID}"}'
-
     environment:
+      - PORTAL_EMAIL=${EMAIL}
+      - PORTAL_PASSWORD=${PASSWORD}
+      - PORTAL_PORT=${PORTAL_PORT}
+      - PORTAL_USER_TOKEN=${PORTAL_USER_TOKEN}
+      - PORTAL_ORG_ID=${PORTAL_ORG_ID}
       - RAAVA_HOST_PORT=${PORTAL_PORT}
       - RAAVA_DATABASE_ENABLELOGS=true
       - RAAVA_BLOG_ENABLE=true
