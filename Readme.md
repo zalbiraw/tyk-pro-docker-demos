@@ -21,7 +21,6 @@ A repo for Tyk Pro with different platforms demos.
 
 - Deployments `demos/deployments`
     - **ACI** `/aci`
-    - **Local** `/local`
 
 - Portal `demos/portal`
     - **Custom Templates** `/custom-templates`

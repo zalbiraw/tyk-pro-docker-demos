@@ -32,6 +32,9 @@ services:
     ports:
       - "${DASHBOARD_MACHINE_PORT}:${DASHBOARD_PORT}"
 
+    volumes:
+      - ./resources:/opt/tyk-dashboard/resources
+
     networks:
       - tyk
 
@@ -77,25 +80,35 @@ services:
 
   tyk-redis:
     image: redis
-    container_name: redis
+    container_name: tyk-redis
 
     ports:
       - "${REDIS_MACHINE_PORT}:${REDIS_PORT}"
+
+    volumes:
+      - redis-data:/data
 
     networks:
       - tyk
 
   tyk-mongo:
     image: mongo:3.2
-    container_name: mongo
+    container_name: tyk-mongo
 
     command: ["mongod", "--smallfiles"]
 
     ports:
       - "${MONGO_MACHINE_PORT}:${MONGO_PORT}"
 
+    volumes:
+      - mongo-data:/data/db
+
     networks:
       - tyk
 
 networks:
   tyk:
+
+volumes:
+  redis-data:
+  mongo-data:
