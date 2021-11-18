@@ -13,7 +13,7 @@ services:
       - TYK_DB_TYKAPI_HOST=${GATEWAY_PROTOCOL}://${GATEWAY_HOST}
       - TYK_DB_TYKAPI_PORT=${GATEWAY_PORT}
       - TYK_DB_HOSTCONFIG_HOSTNAME=${GATEWAY_HOST}
-      - TYK_DB_HOSTCONFIG_GATEWAYHOSTNAME=${GATEWAY_HOST}:${GATEWAY_PORT}
+      - TYK_DB_HOSTCONFIG_GATEWAYHOSTNAME=${GATEWAY_HOSTNAME}:${GATEWAY_PORT}
       - TYK_DB_REDISHOST=${REDIS_HOST}
       - TYK_DB_REDISPORT=${REDIS_PORT}
       - TYK_DB_REDISUSESSL=${REDIS_USE_SSL}
@@ -61,7 +61,7 @@ services:
       - tyk
 
   tyk-pump:
-    image: tykio/tyk-pump-docker-pub:v1.5.1-rc2
+    image: tykio/tyk-pump-docker-pub:v1.5.1-rc3
     container_name: tyk-pump
 
     environment:
