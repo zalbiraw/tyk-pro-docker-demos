@@ -3,7 +3,7 @@ services:
   tyk-portal:
     build:
       context: .
-      dockerfile: ./demos/development/portal/Dockerfile
+      dockerfile: ./development/portal/Dockerfile
       args:
         GH_USERNAME: ${GH_USERNAME}
         GH_TOKEN: ${GH_TOKEN}
@@ -20,6 +20,8 @@ services:
       - RAAVA_DATABASE_ENABLELOGS=true
       - RAAVA_BLOG_ENABLE=true
       - RAAVA_SITE_ENABLE=true
+      - DASHBOARD_HOST=tyk-dashboard
+      - DASHBOARD_PORT=${DASHBOARD_PORT}
 
     ports:
       - "${PORTAL_MACHINE_PORT}:${PORTAL_PORT}"

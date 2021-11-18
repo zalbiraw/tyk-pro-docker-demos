@@ -18,7 +18,7 @@ WORKDIR     /go/src/github.com/TykTechnologies/raava
 RUN         go build
 
 COPY        ./scripts/wait-for-it.sh /bin/
-COPY        ./demos/development/portal/scripts/init.sh /bin/start.sh
+COPY        ./development/portal/scripts/init.sh /bin/start.sh
 RUN         chmod +x /bin/start.sh
 RUN         chmod +x /bin/wait-for-it.sh
 
