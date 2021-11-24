@@ -10,7 +10,7 @@ services:
   prometheus:
     build:
       context: .
-      dockerfile: ./demos/analytics/prometheus/Dockerfile
+      dockerfile: ./demos/pumps/prometheus/Dockerfile
 
     container_name: prometheus
 

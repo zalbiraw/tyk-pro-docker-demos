@@ -6,7 +6,7 @@
 
 ## Getting Started
 1. Initilaize `REDIS_CLUSTER_CONF_ENDPOINT`, and `DASHBOARD_HOST`/`GATEWAY_HOST` with the ElastiCache Redis cluster configuration endpoint and EC2 instances public IPv4 DNS respectively by running the `scripts/init.sh` script in the repo root.
-2. Run docker-compose from the repo root using the following command `docker-compose -f docker-compose.yml -f demos/services/elasticache-redis-cluster/docker-compose.yml up`.
+2. Run docker-compose from the repo root using the following command `docker-compose -f docker-compose.yml -f demos/databases/elasticache-redis-cluster/docker-compose.yml up`.
 3. Access Tyk on EC2 instance.
 
 **Optional**: enable SSL on the ElastiCache communication by setting the `REDIS_USE_SSL` to `true`

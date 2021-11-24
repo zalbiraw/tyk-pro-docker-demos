@@ -13,10 +13,11 @@ A repo for Tyk Pro with different platforms demos.
 4. Navigate to [http://localhost:3000](http://localhost:3000) in your browser to access the Tyk Dashboard, and login with the email and password in `.env`
 
 ## Platforms
-- Analytics `demos/analytics`
+- Pumps `demos/pumps`
     - **Datadog** `/datadog`
+    - **Prometheus** `/prometheus`
 
-- Backend Servers `demos/backend-servers`
+- Services `demos/services`
     - **Express.js** `/express-js`
 
 - Deployments `demos/deployments`
@@ -30,7 +31,7 @@ A repo for Tyk Pro with different platforms demos.
     - **Internal Auth** `/internal-auth`
     - **Tyk self-signed certs SSL Setup** `/tyk-ssl`
 
-- Services `demos/services`
+- Databases `demos/databases`
     - **ElastiCache Redis Cluster** `/elasticache-redis-cluster`
 
 - Development `development`
