@@ -16,4 +16,4 @@ services:
       - TYK_PMP_ANALYTICSSTORAGECONFIG_ADDRS=${REDIS_CLUSTER_CONF_ENDPOINT}
 
   tyk-redis:
-    entrypoint: ["echo", "Docker Redis service disabled. Using Elastic Cache Setup instead."]
+    entrypoint: ["echo", "Docker Redis service disabled. Using Elastic Cache service instead."]

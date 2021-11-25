@@ -17,7 +17,8 @@ services:
       - TYK_DB_REDISHOST=${REDIS_HOST}
       - TYK_DB_REDISPORT=${REDIS_PORT}
       - TYK_DB_REDISUSESSL=${REDIS_USE_SSL}
-      - TYK_DB_MONGOURL=mongodb://${MONGO_HOST}:${MONGO_PORT}/tyk_analytics
+      - TYK_DB_STORAGE_MAIN_TYPE=mongo
+      - TYK_DB_STORAGE_MAIN_CONNECTIONSTRING=mongodb://${MONGO_HOST}:${MONGO_PORT}/tyk_analytics
       - ORG=${ORG}
       - SLUG=${SLUG}
       - EMAIL=${EMAIL}
